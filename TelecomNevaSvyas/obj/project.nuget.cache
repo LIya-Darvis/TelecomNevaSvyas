@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "CvjmVu5OrqpogiD23lOxwMOTC9j4W0K012QyulwHnlV3gL4V04+KGzIdz2ip+APymNPfYVxIs6ZXoClfEtgpSA==",
+  "dgSpecHash": "4ft4cQQlMnaOh9aRWFRc7V0/mwg8Dc6W/QycwIs+N4ezuVs3jI9KEptqWPIT37V9pNoYjciAWX7p62EjKX9lDA==",
   "success": true,
   "projectFilePath": "E:\\Codes\\WS\\TelecomNevaSvyas\\TelecomNevaSvyas\\TelecomNevaSvyas.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\stud\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.0\\microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\stud\\.nuget\\packages\\npgsql\\7.0.2\\npgsql.7.0.2.nupkg.sha512"
+  ],
   "logs": []
 }

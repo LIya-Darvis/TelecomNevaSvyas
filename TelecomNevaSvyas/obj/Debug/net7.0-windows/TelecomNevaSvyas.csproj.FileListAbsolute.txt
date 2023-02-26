@@ -21,3 +21,6 @@ E:\Codes\WS\TelecomNevaSvyas\TelecomNevaSvyas\obj\Debug\net7.0-windows\TelecomNe
 E:\Codes\WS\TelecomNevaSvyas\TelecomNevaSvyas\obj\Debug\net7.0-windows\ref\TelecomNevaSvyas.dll
 E:\Codes\WS\TelecomNevaSvyas\TelecomNevaSvyas\obj\Debug\net7.0-windows\AuthorisationWindow.g.cs
 E:\Codes\WS\TelecomNevaSvyas\TelecomNevaSvyas\obj\Debug\net7.0-windows\AuthorisationWindow.baml
+E:\Codes\WS\TelecomNevaSvyas\TelecomNevaSvyas\bin\Debug\net7.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+E:\Codes\WS\TelecomNevaSvyas\TelecomNevaSvyas\bin\Debug\net7.0-windows\Npgsql.dll
+E:\Codes\WS\TelecomNevaSvyas\TelecomNevaSvyas\obj\Debug\net7.0-windows\TelecomNevaSvyas.csproj.CopyComplete

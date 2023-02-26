@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using TelecomNevaSvyas.DBModels;
 
 namespace TelecomNevaSvyas
 {
@@ -16,6 +18,9 @@ namespace TelecomNevaSvyas
 
         private void GoToMain(object sender, RoutedEventArgs e)
         {
+            EmployeesModel testConnection = new EmployeesModel();
+            testConnection.TestConnection();
+
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
         }
