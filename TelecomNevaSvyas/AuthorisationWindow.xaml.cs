@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using TelecomNevaSvyas.DBModels;
 using Npgsql;
@@ -31,30 +32,18 @@ namespace TelecomNevaSvyas
         
         private static void TestConnection()
         {
-            try
+            // получение данных
+            using (EmployeesModel db = new EmployeesModel())
             {
-                NpgsqlConnection conn = new NpgsqlConnection("Server=localhost;Port=5432;User Id=postgres;Password=123;Database=TelecomNevaSvyasDB;"); 
-                conn.Open(); 
-                if (conn.State == System.Data.ConnectionState.Open) 
-                    Console.WriteLine("Success open postgreSQL connection.");
-
-                if (conn != null) {Console.WriteLine("Success");}
-                else {Console.WriteLine("Not Success");}
-                
-                string sql = "SELECT * FROM Positions";
-                using var cmd = new NpgsqlCommand(sql, conn);
-
-                using NpgsqlDataReader rdr = cmd.ExecuteReader();
-
-                while (rdr.Read())
+                // получаем объекты из бд и выводим на консоль
+                var positions = db.Positions.ToList();
+                Console.WriteLine("Positions list:");
+                foreach (Positions p in positions)
                 {
-                    Console.WriteLine("{0} {1}", rdr.GetInt32(0), rdr.GetString(1));
+                    Console.WriteLine($"{p.Id} - {p.Name}");
                 }
             }
-            catch (Exception)
-            {
-                Console.WriteLine("Error...");
-            }
         }
+        
     }
 }

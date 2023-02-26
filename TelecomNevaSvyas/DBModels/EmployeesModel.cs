@@ -1,27 +1,19 @@
 ﻿using System;
 using System.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace TelecomNevaSvyas.DBModels;
 using Npgsql;
 
-public class EmployeesModel
+public class EmployeesModel : DbContext
 {
-    public void TestConnection()
+    public DbSet<Positions> Positions { get; set; }
+    public EmployeesModel()
     {
-        try
-        {
-            NpgsqlConnection conn =
-                new NpgsqlConnection(
-                    "Server=localhost;Port=5432;Username=postgres;Password=123;Database=TelecomNevaSvyasDB;");
-            conn.Open();
-            
-            if (conn != null) {Console.WriteLine("Success");}
-            else {Console.WriteLine("Not Success");}
-            
-        }
-        catch (Exception)
-        {
-            Console.WriteLine("Error...");
-        }
+        Database.EnsureCreated();
+    }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseNpgsql(@"Host=localhost;Port=5432;Database=TelecomNevaSvyasDB;Username=postgres;Password=123");
     }
 }
