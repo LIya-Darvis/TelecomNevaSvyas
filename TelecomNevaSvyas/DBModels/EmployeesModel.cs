@@ -14,6 +14,6 @@ public class EmployeesModel : DbContext
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(@"Host=localhost;Port=5432;Database=TelecomNevaSvyasDB;Username=postgres;Password=123");
+        optionsBuilder.UseNpgsql(@"Server=localhost;Port=5432;Database=TelecomNevaSvyasDB;Username=postgres;Password=123");
     }
 }
