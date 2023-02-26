@@ -54,8 +54,6 @@
                     Content="Вход" FontSize="14" x:Name="IntoButton"
                     Click="GoToMain"/>
         </StackPanel>
-       
-        
         
     </Grid>
 </Window>

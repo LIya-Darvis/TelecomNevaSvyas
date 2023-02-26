@@ -12,9 +12,12 @@ public class EmployeesModel
         {
             NpgsqlConnection conn =
                 new NpgsqlConnection(
-                    "Server=localhost;Port=5432;User Id=postgres;Password=123;Database=TelecomNevaSvyasDB;");
+                    "Server=localhost;Port=5432;Username=postgres;Password=123;Database=TelecomNevaSvyasDB;");
             conn.Open();
-            Console.WriteLine("Success");
+            
+            if (conn != null) {Console.WriteLine("Success");}
+            else {Console.WriteLine("Not Success");}
+            
         }
         catch (Exception)
         {
