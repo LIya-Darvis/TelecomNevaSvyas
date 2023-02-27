@@ -44,7 +44,7 @@ public class EmployeesModel
         var reader = command.ExecuteReader();
         while (reader.Read())
         {
-            numbers.Add(reader.GetInt32(2).ToString());
+            numbers.Add(reader.GetInt32(3).ToString());
         }
         if (numbers.Contains(number)) {return true;}
         else { return false;}

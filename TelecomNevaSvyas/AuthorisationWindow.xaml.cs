@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +12,12 @@ namespace TelecomNevaSvyas
 {
     public partial class AuthorisationWindow : Window
     {
+        static DBConnection connection = new DBConnection();
+        NpgsqlConnection conn = connection.Connection();
+
+        public int final_number;
+        public String final_password;
+
         public AuthorisationWindow()
         {
             InitializeComponent();
@@ -25,54 +32,77 @@ namespace TelecomNevaSvyas
         
         private void NumberValidation(object sender, KeyEventArgs e)
         {
+            const string TABLE_NAME = "Employees";
             String number = NumberTextBox.Text;
             
             if (e.Key == Key.Return)
             {
-                EmployeesModel employeesModel = new EmployeesModel();
-                bool numberInDb = employeesModel.NumberInDB(number);
-
-                if (numberInDb)
+                NpgsqlCommand command = new NpgsqlCommand($"SELECT * FROM {TABLE_NAME}", conn);
+                List<string> numbers = new List<string>();
+        
+                var reader = command.ExecuteReader();
+                while (reader.Read())
                 {
-                    IntoButton.IsEnabled = true;
+                    numbers.Add(reader.GetInt32(2).ToString());
+                }
+
+                if (numbers.Contains(number))
+                {
                     PasswordTextBox.IsEnabled = true;
                     PasswordTextBox.IsFocused.Equals(true);
+                    final_number = int.Parse(number);
                 }
                 else
                 {
-                    IntoButton.IsEnabled = false;
                     PasswordTextBox.IsEnabled = false;
                     PasswordTextBox.IsFocused.Equals(false);
                     MessageBox.Show("Номер отсутствует в базе", "Ошибка");
                 }
             }
-            
-            
         }
+        
+        private void PasswordValidation(object sender, KeyEventArgs e)
+        {
+            const string TABLE_NAME = "Employees";
+            String password = NumberTextBox.Text;
+            
+            if (e.Key == Key.Return)
+            {
+                NpgsqlCommand command = new NpgsqlCommand($"SELECT * FROM {TABLE_NAME}", conn);
+                List<string> passwords = new List<string>();
+
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    passwords.Add(reader.GetInt32(3).ToString());
+                }
+                
+
+                ValidationLabel.Content = passwords;
+
+
+                // if (reader.ToString() == password)
+                // {
+                //     CodeTextBox.IsEnabled = true;
+                //     CodeTextBox.IsFocused.Equals(true);
+                //     final_password = password;
+                // }
+                // else
+                // {
+                //     CodeTextBox.IsEnabled = false;
+                //     CodeTextBox.IsFocused.Equals(false);
+                //     MessageBox.Show("Неверный пароль", "Ошибка");
+                // }
+            }
+        }
+        
 
         private void GoToMain(object sender, RoutedEventArgs e)
         {
-            
-
             MainWindow mainWindow = new MainWindow();
-            // var connectionLabelContent = mainWindow.ConnectionLabel.Content = (info);
-
-            // if (info)
-            // {
+  
             mainWindow.Show();
-            // }
 
-
-            // NpgsqlConnection conn = new NpgsqlConnection("Server=localhost;User Id=postgres;Password=123;Database=TelecomNevaSvyasDB;");
-            // conn.Open();
-            //
-            // // Define a query returning a single row result set
-            // NpgsqlCommand command = new NpgsqlCommand("SELECT name FROM Positions", conn);
-            //
-            // // Execute the query and obtain the value of the first column of the first row
-            // String count = command.ExecuteScalar().ToString();
-            //
-            // var connectionLabelContent = mainWindow.ConnectionLabel.Content = (count);
         }
     }
 }
