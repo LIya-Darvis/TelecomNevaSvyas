@@ -29,30 +29,36 @@
         <StackPanel Grid.Row="1" Grid.Column="1">
             <DockPanel Margin="0 0 0 10">
                 <Label Width="90" Content="Номер" VerticalAlignment="Center" FontSize="18"/>
-                <TextBox Height="30" VerticalAlignment="Center" x:Name="NumberTextBox"/>
+                <TextBox Height="30" VerticalAlignment="Center" x:Name="NumberTextBox"
+                         KeyDown="NumberValidation"/>
             </DockPanel>
             <DockPanel Margin="0 0 0 10">
                 <Label Width="90" Content="Пароль" VerticalAlignment="Center" FontSize="18"/>
-                <TextBox Height="30" VerticalAlignment="Center" x:Name="PasswordTextBox"/>
+                <TextBox Height="30" VerticalAlignment="Center" x:Name="PasswordTextBox"
+                         IsEnabled="False"/>
             </DockPanel>
             <DockPanel Margin="0 0 0 10">
                 <Label Width="90" Content="Код" VerticalAlignment="Center" FontSize="18"/>
                 <DockPanel>
-                    <TextBox Height="30" MinWidth="250" VerticalAlignment="Center" x:Name="CodeTextBox"/>
+                    <TextBox Height="30" MinWidth="250" VerticalAlignment="Center" 
+                             x:Name="CodeTextBox" IsEnabled="False"/>
                     <Image Source="../img/update.jpg" Height="25" HorizontalAlignment="Right"
                            Margin="0 0 10 0"/>
                 </DockPanel>
             </DockPanel>
         </StackPanel>
         
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal"
+        <Label Grid.Row="2" Grid.Column="1" Content="" x:Name="ValidationLabel"
+               VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal"
                     VerticalAlignment="Center" HorizontalAlignment="Center">
             <Button Width="120" Height="35" Margin="0 0 20 0"
                     Content="Отмена" FontSize="14" x:Name="ClearButton"
                     Click="ClearTextBoxes"/>
             <Button Width="120" Height="35" Margin="20 0 0 0"
                     Content="Вход" FontSize="14" x:Name="IntoButton"
-                    Click="GoToMain"/>
+                    Click="GoToMain" IsEnabled="False"/>
         </StackPanel>
         
     </Grid>
