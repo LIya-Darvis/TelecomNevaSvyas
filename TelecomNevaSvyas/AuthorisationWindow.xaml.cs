@@ -30,9 +30,9 @@ namespace TelecomNevaSvyas
             if (e.Key == Key.Return)
             {
                 EmployeesModel employeesModel = new EmployeesModel();
-                bool info = employeesModel.NumberInDB(number);
+                bool numberInDb = employeesModel.NumberInDB(number);
 
-                if (info)
+                if (numberInDb)
                 {
                     IntoButton.IsEnabled = true;
                     PasswordTextBox.IsEnabled = true;

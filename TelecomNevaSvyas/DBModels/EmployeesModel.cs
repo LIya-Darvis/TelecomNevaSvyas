@@ -33,6 +33,23 @@ public class EmployeesModel
         else { return false;}
 
     }
+    
+    public bool PasswordInDB(String number)
+    {
+        // Define a query returning a single row result set
+        NpgsqlCommand command = new NpgsqlCommand($"SELECT * FROM {TABLE_NAME}", conn);
+
+        List<string> numbers = new List<string>();
+        
+        var reader = command.ExecuteReader();
+        while (reader.Read())
+        {
+            numbers.Add(reader.GetInt32(2).ToString());
+        }
+        if (numbers.Contains(number)) {return true;}
+        else { return false;}
+
+    }
 }
 
 public class BoardEmployee
