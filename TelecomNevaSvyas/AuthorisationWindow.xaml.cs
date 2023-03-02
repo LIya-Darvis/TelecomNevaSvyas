@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,7 +17,7 @@ namespace TelecomNevaSvyas
         NpgsqlConnection conn = connection.Connection();
 
         public int final_number;
-        public String final_password;
+        public String final_password = "";
 
         public AuthorisationWindow()
         {
@@ -51,6 +52,7 @@ namespace TelecomNevaSvyas
                     PasswordTextBox.IsEnabled = true;
                     PasswordTextBox.IsFocused.Equals(true);
                     final_number = int.Parse(number);
+                    ValidationLabel.Content = $"Данный номер есть в базе: {final_number}";
                 }
                 else
                 {
@@ -63,7 +65,7 @@ namespace TelecomNevaSvyas
         
         private void PasswordValidation(object sender, KeyEventArgs e)
         {
-            const string TABLE_NAME = "Employees";
+            const string TABLE_NAME = "employees";
             String password = NumberTextBox.Text;
             
             if (e.Key == Key.Return)
@@ -76,9 +78,20 @@ namespace TelecomNevaSvyas
                 {
                     passwords.Add(reader.GetInt32(3).ToString());
                 }
-                
 
-                ValidationLabel.Content = passwords;
+                if (passwords.Contains(password))
+                {
+                    CodeTextBox.IsEnabled = true;
+                    CodeTextBox.IsFocused.Equals(true);
+                    final_password = password;
+                    ValidationLabel.Content = $"Данный пароль есть в базе: {final_password}";
+                }
+                else
+                {
+                    CodeTextBox.IsEnabled = false;
+                    CodeTextBox.IsFocused.Equals(false);
+                    MessageBox.Show("Пароль отсутствует в базе", "Ошибка");
+                }
 
 
                 // if (reader.ToString() == password)
