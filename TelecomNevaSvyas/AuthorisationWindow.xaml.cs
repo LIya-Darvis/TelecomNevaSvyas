@@ -33,79 +33,73 @@ namespace TelecomNevaSvyas
         
         private void NumberValidation(object sender, KeyEventArgs e)
         {
-            const string TABLE_NAME = "Employees";
-            String number = NumberTextBox.Text;
-            
             if (e.Key == Key.Return)
             {
-                NpgsqlCommand command = new NpgsqlCommand($"SELECT * FROM {TABLE_NAME}", conn);
-                List<string> numbers = new List<string>();
-        
-                var reader = command.ExecuteReader();
-                while (reader.Read())
+                // получение данных
+                using (ApplicationContext db = new ApplicationContext())
                 {
-                    numbers.Add(reader.GetInt32(2).ToString());
-                }
-
-                if (numbers.Contains(number))
-                {
-                    PasswordTextBox.IsEnabled = true;
-                    PasswordTextBox.IsFocused.Equals(true);
-                    final_number = int.Parse(number);
-                    ValidationLabel.Content = $"Данный номер есть в базе: {final_number}";
-                }
-                else
-                {
-                    PasswordTextBox.IsEnabled = false;
-                    PasswordTextBox.IsFocused.Equals(false);
-                    MessageBox.Show("Номер отсутствует в базе", "Ошибка");
+                    String s = "";
+                    // получаем объекты из бд и выводим на консоль
+                    var employees = db.Employees.ToList();
+                    List<String> numbers = new List<String>();
+                    String number = NumberTextBox.Text;
+                    
+                    foreach (Employee p in employees)
+                    {
+                        numbers.Add(p.Number.ToString());
+                        s += $"{p.Number} \n";
+                    }
+                    ValidationLabel.Content = s;
+                    
+                    if (numbers.Contains(number))
+                    {
+                        PasswordTextBox.IsEnabled = true;
+                        final_number = int.Parse(number);
+                        ValidationLabel.Content = $"Данный номер есть в базе: {final_number}";
+                    }
+                    else
+                    {
+                        PasswordTextBox.IsEnabled = false;
+                        MessageBox.Show("Номер отсутствует в базе", "Ошибка");
+                    }
                 }
             }
         }
         
         private void PasswordValidation(object sender, KeyEventArgs e)
         {
-            const string TABLE_NAME = "employees";
-            String password = NumberTextBox.Text;
-            
             if (e.Key == Key.Return)
             {
-                NpgsqlCommand command = new NpgsqlCommand($"SELECT * FROM {TABLE_NAME}", conn);
-                List<string> passwords = new List<string>();
-
-                var reader = command.ExecuteReader();
-                while (reader.Read())
+                // получение данных
+                using (ApplicationContext db = new ApplicationContext())
                 {
-                    passwords.Add(reader.GetInt32(3).ToString());
-                }
+                    String s = "";
+                    // получаем объекты из бд и выводим на консоль
+                    var employees = db.Employees.ToList();
+                    // List<String[]> numbersPasswords = new List<String[]>();
+                    
+                    
+                    foreach (Employee p in employees)
+                    {
+                        String password = PasswordTextBox.Text;
 
-                if (passwords.Contains(password))
-                {
-                    CodeTextBox.IsEnabled = true;
-                    CodeTextBox.IsFocused.Equals(true);
-                    final_password = password;
-                    ValidationLabel.Content = $"Данный пароль есть в базе: {final_password}";
-                }
-                else
-                {
-                    CodeTextBox.IsEnabled = false;
-                    CodeTextBox.IsFocused.Equals(false);
-                    MessageBox.Show("Пароль отсутствует в базе", "Ошибка");
-                }
+                        String[] buffer = {p.Number.ToString(), p.Password};
 
-
-                // if (reader.ToString() == password)
-                // {
-                //     CodeTextBox.IsEnabled = true;
-                //     CodeTextBox.IsFocused.Equals(true);
-                //     final_password = password;
-                // }
-                // else
-                // {
-                //     CodeTextBox.IsEnabled = false;
-                //     CodeTextBox.IsFocused.Equals(false);
-                //     MessageBox.Show("Неверный пароль", "Ошибка");
-                // }
+                        if (buffer[0] == final_number.ToString() & buffer[1] == password)
+                        {
+                            CodeTextBox.IsEnabled = true;
+                            final_password = password;
+                            ValidationLabel.Content = $"Данный пароль есть в базе: {final_password}";
+                            break;
+                        }
+                        else
+                        {
+                            CodeTextBox.IsEnabled = false;
+                            MessageBox.Show("Пароль отсутствует в базе", "Ошибка");
+                            continue;
+                        }
+                    }
+                }
             }
         }
         
