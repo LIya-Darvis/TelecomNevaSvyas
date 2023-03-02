@@ -39,7 +39,7 @@ namespace TelecomNevaSvyas
                 using (ApplicationContext db = new ApplicationContext())
                 {
                     String s = "";
-                    // получаем объекты из бд и выводим на консоль
+                    // получаем объекты из бд
                     var employees = db.Employees.ToList();
                     List<String> numbers = new List<String>();
                     String number = NumberTextBox.Text;
@@ -47,7 +47,6 @@ namespace TelecomNevaSvyas
                     foreach (Employee p in employees)
                     {
                         numbers.Add(p.Number.ToString());
-                        s += $"{p.Number} \n";
                     }
                     ValidationLabel.Content = s;
                     
@@ -55,12 +54,12 @@ namespace TelecomNevaSvyas
                     {
                         PasswordTextBox.IsEnabled = true;
                         final_number = int.Parse(number);
-                        ValidationLabel.Content = $"Данный номер есть в базе: {final_number}";
+                        ValidationLabel.Content = "";
                     }
                     else
                     {
                         PasswordTextBox.IsEnabled = false;
-                        MessageBox.Show("Номер отсутствует в базе", "Ошибка");
+                        ValidationLabel.Content = "Номер отсутсвует в базе";
                     }
                 }
             }
@@ -74,11 +73,9 @@ namespace TelecomNevaSvyas
                 using (ApplicationContext db = new ApplicationContext())
                 {
                     String s = "";
-                    // получаем объекты из бд и выводим на консоль
+                    // получаем объекты из бд
                     var employees = db.Employees.ToList();
-                    // List<String[]> numbersPasswords = new List<String[]>();
-                    
-                    
+
                     foreach (Employee p in employees)
                     {
                         String password = PasswordTextBox.Text;
@@ -89,19 +86,21 @@ namespace TelecomNevaSvyas
                         {
                             CodeTextBox.IsEnabled = true;
                             final_password = password;
-                            ValidationLabel.Content = $"Данный пароль есть в базе: {final_password}";
+                            ValidationLabel.Content = "";
                             break;
                         }
                         else
                         {
                             CodeTextBox.IsEnabled = false;
-                            MessageBox.Show("Пароль отсутствует в базе", "Ошибка");
+                            ValidationLabel.Content = "Неверный пароль";
                             continue;
                         }
                     }
                 }
             }
         }
+        
+        
         
 
         private void GoToMain(object sender, RoutedEventArgs e)
