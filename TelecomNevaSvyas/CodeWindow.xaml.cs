@@ -14,32 +14,31 @@ public partial class CodeWindow : Window
     {
         InitializeComponent();
     }
-
-    private void Code_OnClosing(object? sender, CancelEventArgs e)
-    {
-        DispatcherTimer dispatcherTimer = new DispatcherTimer();
-        dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
-        dispatcherTimer.Tick += dispatcherTimerTicker;
-        dispatcherTimer.Start();
-    }
-
     public int count = 10;
-    private void dispatcherTimerTicker(object sender, EventArgs e)
+    
+    public void dispatcherTimerTicker(object sender, EventArgs e)
     {
+        // if (count <= 0 | authorisationWindow.CodeTextBox.Text != (string)CodeLabel.Content)
+        // {
+        //     authorisationWindow.UpdateButton.IsEnabled = true;
+        //     validation = true;
+        //     authorisationWindow.IntoButton.IsEnabled = true;
+        // }
+        // else
+        // {
+        //     authorisationWindow.UpdateButton.IsEnabled = false;
+        //     validation = false;
+        //     authorisationWindow.IntoButton.IsEnabled = false;
+        // }
+        
+        authorisationWindow.ValidationLabel.Visibility = Visibility.Visible; 
+        authorisationWindow.ValidationLabel.Content = count.ToString();
+        CodeLabel.Content = count.ToString();
+        
         count--;
-        if (count == 0)
-        {
-            dispatcherTimer.Stop();
-        }
-        else
-        {
-            authorisationWindow.ValidationLabel.Visibility = Visibility.Visible;
-            authorisationWindow.ValidationLabel.Content = count.ToString();
-            CodeLabel.Content = count.ToString();
-        }
     }
 
-    private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+    public void ButtonBase_OnClick(object sender, RoutedEventArgs e)
     {
         authorisationWindow.ValidationLabel.Visibility = Visibility.Visible;
         authorisationWindow.ValidationLabel.Content = count.ToString();
@@ -49,4 +48,6 @@ public partial class CodeWindow : Window
         dispatcherTimer.Tick += dispatcherTimerTicker;
         dispatcherTimer.Start();
     }
+    
+    
 }

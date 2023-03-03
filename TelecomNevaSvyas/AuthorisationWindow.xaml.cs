@@ -15,6 +15,7 @@ namespace TelecomNevaSvyas
     {
         public int final_number;
         public String final_password = "";
+        public bool validation = false;
 
         public AuthorisationWindow()
         {
@@ -70,7 +71,6 @@ namespace TelecomNevaSvyas
                 using (ApplicationContext db = new ApplicationContext())
                 {
                     bool flag = false;
-                    String s = "";
                     // получаем объекты из бд
                     var employees = db.Employees.ToList();
 
@@ -99,25 +99,46 @@ namespace TelecomNevaSvyas
 
                     if (flag)
                     {
-                        CodeValidation();
+                        CodeShowing();
                     }
                 }
             }
         }
+        
+        private void CodeValidaton(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                CodeWindow codeWindow = new CodeWindow();
 
-        private void CodeValidation()
+                if (codeWindow.count <= 0 & CodeTextBox.Text != (string)codeWindow.CodeLabel.Content)
+                {
+                    UpdateButton.IsEnabled = false;
+                    validation = false;
+                    IntoButton.IsEnabled = false;
+                }
+                else
+                {
+                    UpdateButton.IsEnabled = true;
+                    validation = true;
+                    IntoButton.IsEnabled = true;
+                }
+            }
+        }
+
+        private void CodeShowing()
         {
             CodeWindow codeWindow = new CodeWindow();
             codeWindow.CodeLabel.Content = CreateRandomPassword();
             codeWindow.Show();
-            
         }
         
         private static string CreateRandomPassword(int length = 4)
         {
             string validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZ" +
                                 "abcdefghijkmnopqrstuvwxyz" +
-                                "0123456789";
+                                "0123456789" +
+                                "!@#$%^&*?_-";
             Random random = new Random();
             
             char[] chars = new char[length];
@@ -128,15 +149,23 @@ namespace TelecomNevaSvyas
             return new string(chars);
         }
         
-        
-        
 
         private void GoToMain(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-  
-            mainWindow.Show();
+            CodeWindow codeWindow = new CodeWindow();
+            if (validation)
+            {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+            }
 
         }
+
+        private void Updating(object sender, RoutedEventArgs e)
+        {
+            CodeShowing();
+        }
+
+        
     }
 }

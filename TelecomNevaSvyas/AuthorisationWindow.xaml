@@ -42,9 +42,12 @@
                 <DockPanel>
                     <TextBox Height="30" MinWidth="250" VerticalAlignment="Center" 
                              x:Name="CodeTextBox" IsEnabled="False"
-                             />
-                    <Image Source="../img/update.jpg" Height="25" HorizontalAlignment="Right"
-                           Margin="0 0 10 0"/>
+                             KeyDown="CodeValidaton"/>
+                    <Button Width="30" Height="30" IsEnabled="False"
+                            Background="Transparent" BorderThickness="0"
+                            x:Name="UpdateButton" Click="Updating">
+                        <Image Source="../img/update.jpg" Height="30" HorizontalAlignment="Right"/>
+                    </Button>
                 </DockPanel>
             </DockPanel>
         </StackPanel>
