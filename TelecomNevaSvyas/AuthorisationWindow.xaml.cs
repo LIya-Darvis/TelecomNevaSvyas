@@ -13,9 +13,6 @@ namespace TelecomNevaSvyas
 {
     public partial class AuthorisationWindow : Window
     {
-        static DBConnection connection = new DBConnection();
-        NpgsqlConnection conn = connection.Connection();
-
         public int final_number;
         public String final_password = "";
 
@@ -72,6 +69,7 @@ namespace TelecomNevaSvyas
                 // получение данных
                 using (ApplicationContext db = new ApplicationContext())
                 {
+                    bool flag = false;
                     String s = "";
                     // получаем объекты из бд
                     var employees = db.Employees.ToList();
@@ -87,17 +85,47 @@ namespace TelecomNevaSvyas
                             CodeTextBox.IsEnabled = true;
                             final_password = password;
                             ValidationLabel.Content = "";
+                            flag = true;
                             break;
                         }
                         else
                         {
                             CodeTextBox.IsEnabled = false;
                             ValidationLabel.Content = "Неверный пароль";
-                            continue;
+                            flag = false;
+                            break;
                         }
+                    }
+
+                    if (flag)
+                    {
+                        CodeValidation();
                     }
                 }
             }
+        }
+
+        private void CodeValidation()
+        {
+            CodeWindow codeWindow = new CodeWindow();
+            codeWindow.CodeLabel.Content = CreateRandomPassword();
+            codeWindow.Show();
+            
+        }
+        
+        private static string CreateRandomPassword(int length = 4)
+        {
+            string validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZ" +
+                                "abcdefghijkmnopqrstuvwxyz" +
+                                "0123456789";
+            Random random = new Random();
+            
+            char[] chars = new char[length];
+            for (int i = 0; i < length; i++)
+            {
+                chars[i] = validChars[random.Next(0, validChars.Length)];
+            }
+            return new string(chars);
         }
         
         
